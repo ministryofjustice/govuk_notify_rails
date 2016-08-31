@@ -2,9 +2,11 @@
 
 Custom ActionMailer delivery to send emails via the API client for GOV.UK Notify.
 
+[![Gem Version](https://badge.fury.io/rb/govuk_notify_rails.svg)](https://badge.fury.io/rb/govuk_notify_rails)
+
 ## Installation
 
-Prior to usage an account must be created through the Notify admin console. This will provide the API credentials needed in you application.
+Prior to usage an account must be created through the [GOV.UK Notify](https://www.notifications.service.gov.uk) admin console. This will provide the API credentials needed in you application.
 
 You can then install the gem or require it in your application.
 
@@ -12,11 +14,9 @@ You can then install the gem or require it in your application.
 gem 'govuk_notify_rails'
 ```
 
-Please note the `notifications-ruby-client` gem has not been released yet to RubyGems so there needs to be a reference to the git repository in your Gemfile. This will not be necessary and this dependency will be added to the gemspec once said gem is released to RubyGems.
+Please note this gem makes use of the [notifications-ruby-client](https://github.com/alphagov/notifications-ruby-client) gem version >= 1.0.0
 
-```ruby
-gem 'notifications-ruby-client', '~> 0.0.1', git: 'https://github.com/alphagov/notifications-ruby-client.git'
-```
+You can use a specific version in your Gemfile.
 
 In your app, you will need to add the delivery method, and set the `service_id` and `secret_key`, for example with an initializer:
 

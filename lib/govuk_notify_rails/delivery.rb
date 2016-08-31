@@ -25,7 +25,7 @@ module GovukNotifyRails
         to: message.to.first,
         template: message.govuk_notify_template,
         personalisation: message.govuk_notify_personalisation
-      }.compact.to_json
+      }.compact
     end
 
     def notify_client

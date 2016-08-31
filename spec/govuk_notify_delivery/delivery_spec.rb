@@ -24,7 +24,7 @@ describe GovukNotifyRails::Delivery do
     end
 
     it 'should deliver the message payload' do
-      expect(notify_client).to receive(:send_email).with('{"to":"email@example.com","template":"template-123","personalisation":{"name":"John"}}')
+      expect(notify_client).to receive(:send_email).with({to: 'email@example.com', template: 'template-123', personalisation: {name: 'John'}})
       subject.deliver!(message)
     end
 
@@ -32,7 +32,7 @@ describe GovukNotifyRails::Delivery do
       let(:personalisation) { nil }
 
       it 'supports message without personalisation' do
-        expect(notify_client).to receive(:send_email).with('{"to":"email@example.com","template":"template-123"}')
+        expect(notify_client).to receive(:send_email).with({to: 'email@example.com', template: 'template-123'})
         subject.deliver!(message)
       end
     end
