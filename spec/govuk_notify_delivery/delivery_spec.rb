@@ -3,36 +3,54 @@ require 'govuk_notify_rails/delivery'
 
 describe GovukNotifyRails::Delivery do
   describe '#deliver!' do
-    let(:service_id) { 'service-123' }
-    let(:secret_key) { 'secret' }
+    let(:api_key) { 'api-key' }
     let(:notify_client) { double('NotifyClient') }
 
     let(:personalisation) { { name: 'John' } }
+    let(:reference) { 'my_reference' }
 
     let(:message) do
-      instance_double(Mail::Message,
-                      to: ['email@example.com'],
-                      govuk_notify_template: 'template-123',
-                      govuk_notify_personalisation: personalisation)
+      instance_double(
+        Mail::Message,
+        to: ['email@example.com'],
+        govuk_notify_template: 'template-123',
+        govuk_notify_reference: reference,
+        govuk_notify_personalisation: personalisation
+      )
     end
 
-    subject { described_class.new(service_id: service_id, secret_key: secret_key) }
+    subject { described_class.new(api_key: api_key) }
 
     before(:each) do
-      allow(notify_client).to receive(:new).with(service_id, secret_key).and_return(notify_client)
+      allow(notify_client).to receive(:new).with(api_key).and_return(notify_client)
       allow(subject).to receive(:notify_client).and_return(notify_client)
     end
 
     it 'should deliver the message payload' do
-      expect(notify_client).to receive(:send_email).with({to: 'email@example.com', template: 'template-123', personalisation: {name: 'John'}})
+      expect(notify_client).to receive(:send_email).with(
+        {email_address: 'email@example.com', template_id: 'template-123', reference: reference, personalisation: personalisation}
+      )
       subject.deliver!(message)
     end
 
     context 'no personalisation set' do
       let(:personalisation) { nil }
 
-      it 'supports message without personalisation' do
-        expect(notify_client).to receive(:send_email).with({to: 'email@example.com', template: 'template-123'})
+      it 'supports messages without personalisation' do
+        expect(notify_client).to receive(:send_email).with(
+          {email_address: 'email@example.com', template_id: 'template-123', reference: reference}
+        )
+        subject.deliver!(message)
+      end
+    end
+
+    context 'no reference set' do
+      let(:reference) { nil }
+
+      it 'supports messages without a reference' do
+        expect(notify_client).to receive(:send_email).with(
+          {email_address: 'email@example.com', template_id: 'template-123', personalisation: personalisation}
+        )
         subject.deliver!(message)
       end
     end

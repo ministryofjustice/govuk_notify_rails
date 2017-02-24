@@ -4,6 +4,7 @@ require 'govuk_notify_rails/mailer'
 RSpec.describe NotifyMailer, type: :mailer do
   describe 'new_message_test_email' do
     let(:template) { '9661d08a-486d-4c67-865e-ad976f17871d' }
+    let(:reference) { 'my_reference' }
     let(:user) { double('User', name: 'Test Name', email: 'test@example.com') }
     let(:mail) { described_class.test_email(user) }
 
@@ -21,6 +22,10 @@ RSpec.describe NotifyMailer, type: :mailer do
 
     it 'sets the template' do
       expect(mail.govuk_notify_template).to eq(template)
+    end
+
+    it 'sets the reference' do
+      expect(mail.govuk_notify_reference).to eq(reference)
     end
 
     it 'sets the personalisation' do

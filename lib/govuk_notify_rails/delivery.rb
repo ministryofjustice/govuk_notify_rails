@@ -12,24 +12,21 @@ module GovukNotifyRails
 
     private
 
-    def service_id
-      settings[:service_id]
-    end
-
-    def secret_key
-      settings[:secret_key]
+    def api_key
+      settings[:api_key]
     end
 
     def payload_for(message)
       {
-        to: message.to.first,
-        template: message.govuk_notify_template,
+        email_address: message.to.first,
+        template_id: message.govuk_notify_template,
+        reference: message.govuk_notify_reference,
         personalisation: message.govuk_notify_personalisation
       }.compact
     end
 
     def notify_client
-      @notify_client ||= Notifications::Client.new(service_id, secret_key)
+      @notify_client ||= Notifications::Client.new(api_key)
     end
   end
 end

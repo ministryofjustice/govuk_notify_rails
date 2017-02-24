@@ -14,23 +14,22 @@ You can then install the gem or require it in your application.
 gem 'govuk_notify_rails'
 ```
 
-Please note this gem makes use of the [notifications-ruby-client](https://github.com/alphagov/notifications-ruby-client) gem version >= 1.0.0
+Please note this gem makes use of the [notifications-ruby-client](https://github.com/alphagov/notifications-ruby-client) gem version >= 2.0.0
 
-You can use a specific version in your Gemfile.
+You can use a specific version in your Gemfile if you want, granting there are no breaking changes in the interface.
 
-In your app, you will need to add the delivery method, and set the `service_id` and `secret_key`, for example with an initializer:
+In your app, you will need to add the delivery method, and set the `api_key`, for example with an initializer:
 
 ```ruby
 ActionMailer::Base.add_delivery_method :govuk_notify, GovukNotifyRails::Delivery,
-  service_id: ENV['GOVUK_NOTIFY_SERVICE_ID'],
-  secret_key: ENV['GOVUK_NOTIFY_API_SECRET']
+  api_key: ENV['GOVUK_NOTIFY_API_KEY']
 ```
 
 ## Usage
 
 To send emails through GOV.UK Notify, create your mailers like usual but inheriting from `GovukNotifyRails::Mailer`. Then just use `mail()` as with any other ActionMailer passing the recipient email.
 
-The template ID is mandatory, but the personalisation is optional.
+The template ID is mandatory, but the reference and personalisation are optional.
 
 ```ruby
 class NotifyMailer < GovukNotifyRails::Mailer
@@ -39,6 +38,7 @@ class NotifyMailer < GovukNotifyRails::Mailer
   #
   def my_test_email(user)
     set_template('9661d08a-486d-4c67-865e-ad976f17871d')
+    set_reference('my_reference_string')
     
     set_personalisation(
       full_name: user.full_name,

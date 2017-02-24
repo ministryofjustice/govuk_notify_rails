@@ -3,6 +3,7 @@ module GovukNotifyRails
     default delivery_method: :govuk_notify
 
     attr_accessor :govuk_notify_template
+    attr_accessor :govuk_notify_reference
     attr_accessor :govuk_notify_personalisation
 
     protected
@@ -14,11 +15,16 @@ module GovukNotifyRails
 
       message = super(headers)
       message.govuk_notify_template = govuk_notify_template
+      message.govuk_notify_reference = govuk_notify_reference
       message.govuk_notify_personalisation = govuk_notify_personalisation
     end
 
     def set_template(template)
       self.govuk_notify_template = template
+    end
+
+    def set_reference(reference)
+      self.govuk_notify_reference = reference
     end
 
     def set_personalisation(personalisation)
