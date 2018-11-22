@@ -7,7 +7,10 @@ module GovukNotifyRails
     end
 
     def deliver!(message)
-      notify_client.send_email(payload_for(message))
+      response = notify_client.send_email(
+        payload_for(message)
+      )
+      message.govuk_notify_response = response
     end
 
     private

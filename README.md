@@ -14,7 +14,7 @@ You can then install the gem or require it in your application.
 gem 'govuk_notify_rails'
 ```
 
-Please note this gem makes use of the [notifications-ruby-client](https://github.com/alphagov/notifications-ruby-client) gem version >= 2.0.0
+Please note the last version of this gem makes use of the [notifications-ruby-client](https://github.com/alphagov/notifications-ruby-client) gem version >= 2.9.0
 
 You can use a specific version in your Gemfile if you want, granting there are no breaking changes in the interface.
 
@@ -48,8 +48,17 @@ class NotifyMailer < GovukNotifyRails::Mailer
     mail(to: user.email)
   end
 end
-
 ```
+
+After a successful delivery, you can inspect the returned `Notifications::Client:ResponseNotification` for details of the delivery. For example:
+
+```ruby
+response = NotifyMailer.my_test_email(user).deliver_now
+response.govuk_notify_response.id  # notification UUID
+response.govuk_notify_response.template  # id, version and uri of the template
+```
+
+For more information, refer to the [Notify documentation](https://docs.notifications.service.gov.uk/ruby.html#ruby-client-documentation).
 
 ### Mailer previewing
 
@@ -83,4 +92,4 @@ Bug reports and pull requests are welcome.
 
 ## License
 
-Released under the [MIT License](http://www.opensource.org/licenses/MIT). Copyright (c) 2015-2016 Ministry of Justice.
+Released under the [MIT License](http://www.opensource.org/licenses/MIT). Copyright (c) 2015-2018 Ministry of Justice.

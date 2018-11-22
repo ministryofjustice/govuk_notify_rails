@@ -24,6 +24,7 @@ describe GovukNotifyRails::Delivery do
     before(:each) do
       allow(notify_client).to receive(:new).with(api_key).and_return(notify_client)
       allow(subject).to receive(:notify_client).and_return(notify_client)
+      allow(message).to receive(:govuk_notify_response=)
     end
 
     it 'should deliver the message payload' do
@@ -31,6 +32,21 @@ describe GovukNotifyRails::Delivery do
         {email_address: 'email@example.com', template_id: 'template-123', reference: reference, personalisation: personalisation}
       )
       subject.deliver!(message)
+    end
+
+    context 'client response' do
+      before do
+        allow(notify_client).to receive(:send_email).and_return('response')
+      end
+
+      it 'returns the client response' do
+        expect(subject.deliver!(message)).to eq('response')
+      end
+
+      it 'assigns the client response for later inspection' do
+        subject.deliver!(message)
+        expect(message).to have_received(:govuk_notify_response=).with('response')
+      end
     end
 
     context 'no personalisation set' do

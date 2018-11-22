@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir['spec/**/*']
 
   s.add_dependency 'rails', '>= 4.1.0'
-  s.add_dependency 'notifications-ruby-client', '>= 2.0.0'
+  s.add_dependency 'notifications-ruby-client', '>= 2.9.0'
 
   s.add_development_dependency 'bundler', '~> 1.7'
   s.add_development_dependency 'rake', '~> 10.0'

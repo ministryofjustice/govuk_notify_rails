@@ -1,3 +1,11 @@
+2.1.0 (22/11/2018)
+==================
+
+* Updated to use version 2.9.0 of the `notifications-ruby-client` gem, with support for file uploads.
+* After delivery, the `message` object now also holds the `Notifications::Client:ResponseNotification` for inspection. 
+For example this can be used to store in your database the Notification UUID of the email just sent.
+* Tests should now pass also when using Rails 5.x
+
 2.0.0 (24/02/2017)
 ==================
 
