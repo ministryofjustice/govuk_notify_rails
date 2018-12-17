@@ -70,7 +70,7 @@ For example:
 class NotifyMailerPreview < ActionMailer::Preview
   
   def my_test_email
-    user = User.fist
+    user = User.first
     NotifyMailer.my_test_email(user)
   end
   
