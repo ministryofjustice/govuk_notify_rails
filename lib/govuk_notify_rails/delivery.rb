@@ -24,7 +24,8 @@ module GovukNotifyRails
         email_address: message.to.first,
         template_id: message.govuk_notify_template,
         reference: message.govuk_notify_reference,
-        personalisation: message.govuk_notify_personalisation
+        personalisation: message.govuk_notify_personalisation,
+        email_reply_to_id: message.govuk_notify_email_reply_to
       }.compact
     end
 

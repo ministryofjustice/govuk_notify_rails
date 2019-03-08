@@ -5,6 +5,7 @@ describe GovukNotifyRails::Delivery do
   describe '#deliver!' do
     let(:api_key) { 'api-key' }
     let(:notify_client) { double('NotifyClient') }
+    let(:reply_to) { "email_reply_to_reference" }
 
     let(:personalisation) { { name: 'John' } }
     let(:reference) { 'my_reference' }
@@ -15,7 +16,8 @@ describe GovukNotifyRails::Delivery do
         to: ['email@example.com'],
         govuk_notify_template: 'template-123',
         govuk_notify_reference: reference,
-        govuk_notify_personalisation: personalisation
+        govuk_notify_personalisation: personalisation,
+        govuk_notify_email_reply_to: reply_to
       )
     end
 
@@ -29,7 +31,13 @@ describe GovukNotifyRails::Delivery do
 
     it 'should deliver the message payload' do
       expect(notify_client).to receive(:send_email).with(
-        {email_address: 'email@example.com', template_id: 'template-123', reference: reference, personalisation: personalisation}
+        {
+          email_address: 'email@example.com',
+          template_id: 'template-123',
+          reference: reference,
+          personalisation: personalisation,
+          email_reply_to_id: reply_to
+        }
       )
       subject.deliver!(message)
     end
@@ -54,7 +62,12 @@ describe GovukNotifyRails::Delivery do
 
       it 'supports messages without personalisation' do
         expect(notify_client).to receive(:send_email).with(
-          {email_address: 'email@example.com', template_id: 'template-123', reference: reference}
+          {
+            email_address: 'email@example.com',
+            template_id: 'template-123',
+            reference: reference,
+            email_reply_to_id: "email_reply_to_reference"
+          }
         )
         subject.deliver!(message)
       end
@@ -65,7 +78,28 @@ describe GovukNotifyRails::Delivery do
 
       it 'supports messages without a reference' do
         expect(notify_client).to receive(:send_email).with(
-          {email_address: 'email@example.com', template_id: 'template-123', personalisation: personalisation}
+          {
+            email_address: 'email@example.com',
+            template_id: 'template-123',
+            personalisation: personalisation,
+            email_reply_to_id: "email_reply_to_reference"
+          }
+        )
+        subject.deliver!(message)
+      end
+    end
+
+    context 'no reply to address set' do
+      let(:reply_to) { nil }
+
+      it 'supports messages without reply to address' do
+        expect(notify_client).to receive(:send_email).with(
+          {
+            email_address: 'email@example.com',
+            template_id: 'template-123',
+            personalisation: personalisation,
+            reference: reference
+          }
         )
         subject.deliver!(message)
       end

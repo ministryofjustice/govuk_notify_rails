@@ -5,6 +5,7 @@ module GovukNotifyRails
     attr_accessor :govuk_notify_template
     attr_accessor :govuk_notify_reference
     attr_accessor :govuk_notify_personalisation
+    attr_accessor :govuk_notify_email_reply_to
 
     protected
 
@@ -17,6 +18,7 @@ module GovukNotifyRails
       message.govuk_notify_template = govuk_notify_template
       message.govuk_notify_reference = govuk_notify_reference
       message.govuk_notify_personalisation = govuk_notify_personalisation
+      message.govuk_notify_email_reply_to = govuk_notify_email_reply_to
     end
 
     def set_template(template)
@@ -29,6 +31,10 @@ module GovukNotifyRails
 
     def set_personalisation(personalisation)
       self.govuk_notify_personalisation = personalisation
+    end
+
+    def set_email_reply_to(address)
+      self.govuk_notify_email_reply_to = address
     end
 
     def _default_body
