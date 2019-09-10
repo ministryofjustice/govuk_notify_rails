@@ -1,3 +1,9 @@
+2.1.1 (10/09/2019)
+==================
+
+* Added an optional `#set_email_reply_to` method to provide the UUID of the email address to use as `reply_to`. If no 
+email_reply_to is specified, the default email reply to address will be used.
+
 2.1.0 (22/11/2018)
 ==================
 
