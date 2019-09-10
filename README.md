@@ -37,8 +37,12 @@ class NotifyMailer < GovukNotifyRails::Mailer
   # Define methods as usual, and set the template and personalisation accordingly
   #
   def my_test_email(user)
-    set_template('9661d08a-486d-4c67-865e-ad976f17871d')
+    set_template('uuid')
+
+    # Optionally, you can set a reference and a reply_to
+    # 
     set_reference('my_reference_string')
+    set_email_reply_to('uuid')
     
     set_personalisation(
       full_name: user.full_name,
@@ -92,4 +96,4 @@ Bug reports and pull requests are welcome.
 
 ## License
 
-Released under the [MIT License](http://www.opensource.org/licenses/MIT). Copyright (c) 2015-2018 Ministry of Justice.
+Released under the [MIT License](http://www.opensource.org/licenses/MIT). Copyright (c) 2015-2019 Ministry of Justice.
