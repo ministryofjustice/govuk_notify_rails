@@ -96,4 +96,4 @@ Bug reports and pull requests are welcome.
 
 ## License
 
-Released under the [MIT License](http://www.opensource.org/licenses/MIT). Copyright (c) 2015-2019 Ministry of Justice.
+Released under the [MIT License](http://www.opensource.org/licenses/MIT). Copyright (c) 2015-2020 Ministry of Justice.
