@@ -1,7 +1,7 @@
 2.2.0 (07/10/2021)
 ==================
 
-* Support sending a single mail to multiple recipients.
+* Support sending a single mail to multiple recipients. PR contributed by @thomasleese.
 
 2.1.2 (22/01/2020)
 ==================
