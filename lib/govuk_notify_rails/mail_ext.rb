@@ -4,6 +4,7 @@ module Mail
     attr_accessor :govuk_notify_reference
     attr_accessor :govuk_notify_personalisation
     attr_accessor :govuk_notify_response
+    attr_accessor :govuk_notify_responses
     attr_accessor :govuk_notify_email_reply_to
   end
 end
