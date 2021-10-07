@@ -7,10 +7,20 @@ module GovukNotifyRails
     end
 
     def deliver!(message)
-      response = notify_client.send_email(
-        payload_for(message)
-      )
-      message.govuk_notify_response = response
+      payload = payload_for(message)
+
+      responses = message.to.map do |to|
+        notify_client.send_email(
+          payload.merge(email_address: to)
+        )
+      end
+
+      message.govuk_notify_responses = responses
+
+      # For backwards compatibility
+      message.govuk_notify_response = responses.first
+
+      responses
     end
 
     private
@@ -21,7 +31,6 @@ module GovukNotifyRails
 
     def payload_for(message)
       {
-        email_address: message.to.first,
         template_id: message.govuk_notify_template,
         reference: message.govuk_notify_reference,
         personalisation: message.govuk_notify_personalisation,

@@ -62,6 +62,14 @@ response.govuk_notify_response.id  # notification UUID
 response.govuk_notify_response.template  # id, version and uri of the template
 ```
 
+If the mail should be sent to multiple recipients, multiple API calls are made to GOV.UK Notify. You can expect each of the responses in a similar way:
+
+```ruby
+response = NotifyMailer.my_test_email(users).deliver_now
+response.govuk_notify_responses.first.id  # notification UUID
+response.govuk_notify_responses.second.template  # id, version and uri of the template
+```
+
 For more information, refer to the [Notify documentation](https://docs.notifications.service.gov.uk/ruby.html#ruby-client-documentation).
 
 ### Mailer previewing
