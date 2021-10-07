@@ -1,5 +1,5 @@
-Unreleased
-==========
+2.2.0 (07/10/2021)
+==================
 
 * Support sending a single mail to multiple recipients.
 
