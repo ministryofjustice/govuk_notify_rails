@@ -5,11 +5,13 @@ describe GovukNotifyRails::Delivery do
   describe '#deliver!' do
     let(:api_key) { 'api-key' }
     let(:notify_client) { double('NotifyClient') }
-    let(:reply_to) { "email_reply_to_reference" }
-
     let(:to) { ['email@example.com'] }
-    let(:personalisation) { { name: 'John' } }
+
     let(:reference) { 'my_reference' }
+    let(:reply_to) { 'email_reply_to_uuid' }
+    let(:unsubscribe_url) { 'https://example.com/unsubscribe?token=123456' }
+
+    let(:personalisation) { { name: 'John' } }
 
     let(:message) do
       instance_double(
@@ -17,8 +19,9 @@ describe GovukNotifyRails::Delivery do
         to: to,
         govuk_notify_template: 'template-123',
         govuk_notify_reference: reference,
-        govuk_notify_personalisation: personalisation,
-        govuk_notify_email_reply_to: reply_to
+        govuk_notify_email_reply_to: reply_to,
+        govuk_notify_one_click_unsubscribe_url: unsubscribe_url,
+        govuk_notify_personalisation: personalisation
       )
     end
 
@@ -37,8 +40,9 @@ describe GovukNotifyRails::Delivery do
           email_address: 'email@example.com',
           template_id: 'template-123',
           reference: reference,
-          personalisation: personalisation,
-          email_reply_to_id: reply_to
+          email_reply_to_id: reply_to,
+          one_click_unsubscribe_url: unsubscribe_url,
+          personalisation: personalisation
         }
       )
 
@@ -105,7 +109,8 @@ describe GovukNotifyRails::Delivery do
             email_address: 'email@example.com',
             template_id: 'template-123',
             reference: reference,
-            email_reply_to_id: "email_reply_to_reference"
+            email_reply_to_id: reply_to,
+            one_click_unsubscribe_url: unsubscribe_url
           }
         )
         subject.deliver!(message)
@@ -121,7 +126,8 @@ describe GovukNotifyRails::Delivery do
             email_address: 'email@example.com',
             template_id: 'template-123',
             personalisation: personalisation,
-            email_reply_to_id: "email_reply_to_reference"
+            email_reply_to_id: reply_to,
+            one_click_unsubscribe_url: unsubscribe_url
           }
         )
         subject.deliver!(message)
@@ -137,7 +143,25 @@ describe GovukNotifyRails::Delivery do
             email_address: 'email@example.com',
             template_id: 'template-123',
             personalisation: personalisation,
-            reference: reference
+            reference: reference,
+            one_click_unsubscribe_url: unsubscribe_url
+          }
+        )
+        subject.deliver!(message)
+      end
+    end
+
+    context 'no unsubscribe url set' do
+      let(:unsubscribe_url) { nil }
+
+      it 'supports messages without unsubscribe url' do
+        expect(notify_client).to receive(:send_email).with(
+          {
+            email_address: 'email@example.com',
+            template_id: 'template-123',
+            reference: reference,
+            email_reply_to_id: reply_to,
+            personalisation: personalisation
           }
         )
         subject.deliver!(message)

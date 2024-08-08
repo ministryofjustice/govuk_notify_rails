@@ -6,6 +6,7 @@ module GovukNotifyRails
     attr_accessor :govuk_notify_reference
     attr_accessor :govuk_notify_personalisation
     attr_accessor :govuk_notify_email_reply_to
+    attr_accessor :govuk_notify_one_click_unsubscribe_url
 
     protected
 
@@ -19,6 +20,7 @@ module GovukNotifyRails
       message.govuk_notify_reference = govuk_notify_reference
       message.govuk_notify_personalisation = govuk_notify_personalisation
       message.govuk_notify_email_reply_to = govuk_notify_email_reply_to
+      message.govuk_notify_one_click_unsubscribe_url = govuk_notify_one_click_unsubscribe_url
     end
 
     def set_template(template)
@@ -35,6 +37,10 @@ module GovukNotifyRails
 
     def set_email_reply_to(address)
       self.govuk_notify_email_reply_to = address
+    end
+
+    def set_one_click_unsubscribe_url(url)
+      self.govuk_notify_one_click_unsubscribe_url = url
     end
 
     def _default_body

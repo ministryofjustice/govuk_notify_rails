@@ -34,7 +34,8 @@ module GovukNotifyRails
         template_id: message.govuk_notify_template,
         reference: message.govuk_notify_reference,
         personalisation: message.govuk_notify_personalisation,
-        email_reply_to_id: message.govuk_notify_email_reply_to
+        email_reply_to_id: message.govuk_notify_email_reply_to,
+        one_click_unsubscribe_url: message.govuk_notify_one_click_unsubscribe_url
       }.compact
     end
 
