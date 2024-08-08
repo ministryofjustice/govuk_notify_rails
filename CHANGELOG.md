@@ -1,3 +1,15 @@
+3.0.0 (08/08/2024)
+==================
+
+* Updated to use latest version of the `notifications-ruby-client` gem (currently [6.2](https://github.com/alphagov/notifications-ruby-client/blob/main/CHANGELOG.md#620)). PR contributed by @stephencdaly.
+* Added support for [one-click unsubscribe URLs](https://docs.notifications.service.gov.uk/ruby.html#one-click-unsubscribe-url-optional). 
+The one-click unsubscribe URL will be added to the headers of your email. Email clients will use it to add an unsubscribe button.
+
+Please note starting with version 6.0 of the client, some breaking changes were introduced to the `prepare_upload` method. 
+Although this gem does not use this method directly, given the `notifications-ruby-client` gem is a transitive dependency, 
+if you are using `prepare_upload` in your code make sure you've made the [necessary changes](https://github.com/alphagov/notifications-ruby-client/blob/main/CHANGELOG.md#600) 
+before updating to this version.
+
 2.2.0 (07/10/2021)
 ==================
 
